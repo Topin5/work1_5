@@ -8,7 +8,7 @@ class GetAllProductsUsecase {
   final ProductRepo repo;
   GetAllProductsUsecase(this.repo, );
 
-  Future<Either<Failure, List<ProductEntity>>> getAllProducts(){
+  Future<Either<Failure, List<ProductEntity>>> call(){
     return repo.getAllProducts();
   }
 
@@ -18,7 +18,7 @@ class GetAllDetailProductsUsecace{
   final ProductDetailRepo rep;
   GetAllDetailProductsUsecace(this.rep);
 
-  Future<Either<Failure, List<ProductDetailEntity>>> getAllDetailProducts(){
+  Future<Either<Failure, List<ProductDetailEntity>>> call(){
     return rep.getAllDetailProducts();
   }
 }

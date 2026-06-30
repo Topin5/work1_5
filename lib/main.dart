@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:lesson1_5/ui/pages/products_page.dart';
+import 'di/injection_container.dart' as di;
 
 void main() {
+  di.init();
   runApp(const MainApp());
 }
 
@@ -10,11 +13,9 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+      debugShowCheckedModeBanner: false,
+      title: 'Интернет магазин',
+      home: ProductsPage(),  
     );
   }
 }

@@ -10,7 +10,7 @@ class ProductDetailRemoteDatasourceImpl implements ProductDetailRemoteDatasource
   
   @override
   Future<List<ProductDetailModel>> getAllDetailProducts()async {
-    final response = await dio.get('https://fakestoreapi.com/products');
+    final response = await dio.get('https://fakestoreapi.com/products/id?');
     return (response.data as List)
       .map((json) => ProductDetailModel.fromJson(json))
       .toList();
