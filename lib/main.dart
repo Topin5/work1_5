@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lesson1_5/ui/pages/products_page.dart';
+import 'package:lesson1_5/ui/pages/main_page.dart';
 import 'di/injection_container.dart' as di;
 
 void main() {
@@ -13,9 +13,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Интернет магазин',
-      home: ProductsPage(),  
+      home: MainPage(),  
     );
   }
 }

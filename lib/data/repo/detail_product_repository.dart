@@ -11,8 +11,8 @@ class DetailProductRepository implements ProductDetailRepo{
   DetailProductRepository(this.remoteDetailDatasource);
 
   @override
-  Future<Either<Failure, List<ProductDetailEntity>>> getAllDetailProducts()async{
-    try{final deatailProducts = await remoteDetailDatasource.getAllDetailProducts();
+  Future<Either<Failure, List<ProductDetailEntity>>> getAllDetailProducts(int id)async{
+    try{final deatailProducts = await remoteDetailDatasource.getAllDetailProducts(id);
       return Right(deatailProducts);
     }on DioException catch(e){
       return Left(ServerFailure(e.message ?? 'ошибка соединение'));

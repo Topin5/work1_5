@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:lesson1_5/core/storage/secure_storage.dart';
 
 class ApiClient {
   late final Dio dio;
-  ApiClient(){
+  final SecureStorage secureStorage;
+  ApiClient(this.secureStorage){
     dio = Dio(BaseOptions(
       baseUrl: '',
       connectTimeout: const Duration(seconds: 3),
@@ -12,8 +14,31 @@ class ApiClient {
 
     dio.interceptors.addAll([
       _LoggingInterceptor(),
-      _ErrorInterceptor()
+      _ErrorInterceptor(),
+      _AuthInterceptor(secureStorage)
     ]);
+  }
+}
+
+class _AuthInterceptor extends Interceptor {
+  final SecureStorage secureStorage;
+  _AuthInterceptor(this.secureStorage);
+
+  @override
+   void onRequest (RequestOptions options, RequestInterceptorHandler handler)async{
+    final token = await secureStorage.getToken();
+    if(token != null){
+      options.headers['Authorization'] = 'Bearer $token';
+    }
+    handler.next(options);
+   }
+   
+   @override
+  void onError(DioException err, ErrorInterceptorHandler handler){
+    if(err.response?.statusCode == 401){
+      secureStorage.clearAll();
+    }
+    handler.next(err);
   }
 }
 

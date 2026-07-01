@@ -8,5 +8,5 @@ abstract class ProductRepo {
 }
 
 abstract class ProductDetailRepo{
-  Future<Either<Failure, List<ProductDetailEntity>>>  getAllDetailProducts();
+  Future<Either<Failure, List<ProductDetailEntity>>>  getAllDetailProducts(int id);
 }

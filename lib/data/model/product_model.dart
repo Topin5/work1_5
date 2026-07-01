@@ -14,7 +14,7 @@ class ProductModel extends ProductEntity {
     return ProductModel(
       id: json['id'], 
       category: json['category'], 
-      desc: json['desc'], 
+      desc: json['description'], 
       image: json['image'] ?? "", 
       price: json['price'], 
       title: json['title']

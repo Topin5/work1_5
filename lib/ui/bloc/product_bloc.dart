@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lesson1_5/core/base/base_bloc.dart';
+import 'package:lesson1_5/core/base/base_state.dart';
 import 'package:lesson1_5/domain/entity/product_entity.dart';
 import 'package:lesson1_5/domain/usecase/get_all_products_usecase.dart';
 import 'package:lesson1_5/ui/bloc/product_event.dart';
-import 'package:lesson1_5/ui/bloc/product_state.dart';
 
 class ProductBloc extends BaseBloc<ProductEvent, List<ProductEntity>>{
   final GetAllProductsUsecase getAllProductsUsecase;
@@ -15,14 +15,14 @@ class ProductBloc extends BaseBloc<ProductEvent, List<ProductEntity>>{
 
   Future<void> _onLoad(
     LoadProduct event,
-    Emitter <ProductState> emit
+    Emitter <BaseState<List<ProductEntity>>> emit
   )async{
    await fetchData(useCase: () => getAllProductsUsecase(), emit: emit );
   }
 
   Future<void> _onRefresh(
     RefreshProductEvent event,
-    Emitter<ProductState> emit
+    Emitter<BaseState<List<ProductEntity>>> emit
   )async{
     await fetchData(useCase: () => getAllProductsUsecase(), emit: emit );
 

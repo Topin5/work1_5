@@ -7,6 +7,7 @@ import 'package:lesson1_5/data/repo/detail_product_repository.dart';
 import 'package:lesson1_5/data/repo/product_repository.dart';
 import 'package:lesson1_5/domain/repo/product_repo.dart';
 import 'package:lesson1_5/domain/usecase/get_all_products_usecase.dart';
+import 'package:lesson1_5/ui/bloc/detail_product_bloc.dart';
 import 'package:lesson1_5/ui/bloc/product_bloc.dart';
 
 final sl = GetIt.instance;
@@ -14,6 +15,8 @@ final sl = GetIt.instance;
 void init(){
 
   sl.registerFactory(() => ProductBloc(sl()));
+
+  sl.registerFactory(()=> DetailProductBloc(sl()));
 
   sl.registerLazySingleton(() => GetAllProductsUsecase(sl()));
 
@@ -26,12 +29,13 @@ void init(){
 
   sl.registerLazySingleton(() => Dio());
 
-  sl.registerFactory(() => GetAllDetailProductsUsecace(sl()));
+  sl.registerLazySingleton(() => GetAllDetailProductsUsecace(sl()));
 
   sl.registerLazySingleton<ProductDetailRepo>(() => DetailProductRepository(sl()));
 
-  sl.registerLazySingleton(()=> ProductDetailRemoteDatasourceImpl(sl()));
-
+  sl.registerLazySingleton<ProductDetailRemoteDatasource>(
+  () => ProductDetailRemoteDatasourceImpl(sl<ApiClient>().dio)
+);
 }
 
 

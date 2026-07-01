@@ -14,7 +14,7 @@ class ProductDetailModel extends ProductDetailEntity{
   factory ProductDetailModel.fromJson(Map<String, dynamic>json){
     return ProductDetailModel(
       category: json['category'], 
-      desc: json['desc'], 
+      desc: json['description'], 
       id: json['id'], 
       image: json['image'] ??"", 
       price: json['price'], 

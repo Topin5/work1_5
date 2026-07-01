@@ -5,6 +5,7 @@ extension doubleExtension on double{
 
 extension StringExtension on String{
   bool isValidEmail(){
-    final emailRegex = RegExp(r'');
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    return emailRegex.hasMatch(this);
   }
 }

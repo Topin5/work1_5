@@ -18,8 +18,8 @@ class GetAllDetailProductsUsecace{
   final ProductDetailRepo rep;
   GetAllDetailProductsUsecace(this.rep);
 
-  Future<Either<Failure, List<ProductDetailEntity>>> call(){
-    return rep.getAllDetailProducts();
+  Future<Either<Failure, List<ProductDetailEntity>>> call(int id){
+    return rep.getAllDetailProducts(id);
   }
 }
 
