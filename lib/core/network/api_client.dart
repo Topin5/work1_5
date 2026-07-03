@@ -6,7 +6,7 @@ class ApiClient {
   final SecureStorage secureStorage;
   ApiClient(this.secureStorage){
     dio = Dio(BaseOptions(
-      baseUrl: '',
+      baseUrl: 'https://fakestoreapi.com',
       connectTimeout: const Duration(seconds: 3),
       receiveTimeout: const Duration(seconds: 3),
       headers: {'Content_Type': 'application/json'}

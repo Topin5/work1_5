@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lesson1_5/core/ext/ext.dart';
 import 'package:lesson1_5/domain/entity/product_entity.dart';
+import 'package:lesson1_5/ui/bloc/cart_bloc.dart';
+import 'package:lesson1_5/ui/bloc/cart_event.dart';
 import 'package:lesson1_5/ui/pages/detail_page_products.dart';
 
 class WidgetProduct extends StatelessWidget {
@@ -37,11 +41,21 @@ class WidgetProduct extends StatelessWidget {
                     ),
                     SizedBox(height: 4,),
                     Text(
-                      '\$${product.price.toStringAsFixed(2)}',
+                      product.price.asCurrency,
                       style: TextStyle(fontWeight: FontWeight.bold,
                       color: Colors.green
-                      ),
-                      
+                      ),                      
+                    ),
+                    SizedBox(height: 9),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(onPressed:(){
+                        context.read<CartBloc>().add(AddCartEvent(product));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('${product.title} добавлен в корзину'),
+                          duration: Duration(seconds: 1)),
+                        );
+                      }, child: Icon(Icons.shopping_cart)),
                     )
                 ],
               ),)
