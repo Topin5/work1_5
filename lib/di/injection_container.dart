@@ -13,6 +13,7 @@ import 'package:lesson1_5/domain/repo/product_repo.dart';
 import 'package:lesson1_5/domain/usecase/get_all_products_usecase.dart';
 import 'package:lesson1_5/domain/usecase/login_usecase.dart';
 import 'package:lesson1_5/domain/usecase/logout_usecace.dart';
+import 'package:lesson1_5/ui/bloc/auth_bloc.dart';
 import 'package:lesson1_5/ui/bloc/cart_bloc.dart';
 import 'package:lesson1_5/ui/bloc/detail_product_bloc.dart';
 import 'package:lesson1_5/ui/bloc/product_bloc.dart';
@@ -25,26 +26,35 @@ void init(){
 
   sl.registerFactory(()=> DetailProductBloc(sl()));
 
+  sl.registerFactory(() => AuthBloc(
+    loginUsecase: sl(), 
+    logoutUsecace: sl(), 
+    secureStorage: sl()));
+
+  sl.registerLazySingleton(()=> LoginUsecase(sl()));
+  sl.registerLazySingleton(()=> LogoutUsecace(sl()));
+  sl.registerLazySingleton<AuthRepository>(
+    ()=> AuthRepositoryImpl(
+      remoteDatasourse: sl(), 
+      secureStorage: sl()));
+
+  sl.registerLazySingleton<AuthRemoteDatasourse>(
+    ()=> AuthRemoteDatasourseIml(sl<ApiClient>().dio));
+  sl.registerLazySingleton(()=> SecureStorage());        
+
   sl.registerLazySingleton(()=> CartBloc());
 
   sl.registerLazySingleton(() => GetAllProductsUsecase(sl()));
-  sl.registerLazySingleton(()=> LoginUsecase(sl()));
-  sl.registerLazySingleton(()=> LogoutUsecace(sl()));
+
 
   sl.registerLazySingleton<ProductRepo>(() => ProductRepositoryImpl(sl()));
 
   sl.registerLazySingleton(() => ApiClient(sl()));
-  sl.registerLazySingleton(()=> SecureStorage());
+
 
   sl.registerLazySingleton<ProductRemoteDatasource>(() => 
   ProductRemoteDatasourceImpl(sl<ApiClient>().dio));
 
-  sl.registerLazySingleton<AuthRepository>(()=>
-  AuthRepositoryImpl(remoteDatasourse: sl(), secureStorage: sl()));
-
-
-  sl.registerLazySingleton<AuthRemoteDatasourse>(()=>
-  AuthRemoteDatasourseIml(sl<ApiClient>().dio));
 
   sl.registerLazySingleton(() => Dio());
 

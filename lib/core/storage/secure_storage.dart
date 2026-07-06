@@ -6,9 +6,9 @@ class SecureStorage{
     static const _tokenKey = 'auth_token';
     
     Future<void> saveToken(String token){
-      _storage.write(key: _tokenKey, value: token);
+      return _storage.write(key: _tokenKey, value: token);
 
-      return saveToken(token);
+      
     }
 
     Future<String?> getToken() => 
@@ -16,7 +16,7 @@ class SecureStorage{
   
     Future<bool> get isLoggedIn async{
       final token = await getToken();
-      return token != null && token.isEmpty;
+      return token != null && token.isNotEmpty;
     }
 
     Future<void> clearAll() => _storage.deleteAll();

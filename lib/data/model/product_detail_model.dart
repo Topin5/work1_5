@@ -15,9 +15,9 @@ class ProductDetailModel extends ProductDetailEntity{
     return ProductDetailModel(
       category: json['category'], 
       desc: json['description'], 
-      id: json['id'], 
+      id: json['id'] as int , 
       image: json['image'] ??"", 
-      price: json['price'], 
+      price: (json['price'] as num).toDouble(), 
       title: json['title']
       );
   }
