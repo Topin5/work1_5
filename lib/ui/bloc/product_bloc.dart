@@ -12,19 +12,26 @@ class ProductBloc extends BaseBloc<ProductEvent, List<ProductEntity>>{
     on<LoadProduct>(_onLoad);
     on<RefreshProductEvent>(_onRefresh);
   }
-
   Future<void> _onLoad(
-    LoadProduct event,
-    Emitter <BaseState<List<ProductEntity>>> emit
+  LoadProduct event,
+  Emitter <BaseState<List<ProductEntity>>> emit
   )async{
-   await fetchData(useCase: () => getAllProductsUsecase(), emit: emit );
+  final currentState = state;
+  await fetchPaginData<ProductEntity>(useCase: () => getAllProductsUsecase(page: event.page, limit: event.limit ), emit: emit, page: event.page,
+  previosItems: currentState is PaginState<ProductEntity>
+      ? currentState.data
+      : [], 
+   );
   }
 
   Future<void> _onRefresh(
     RefreshProductEvent event,
     Emitter<BaseState<List<ProductEntity>>> emit
   )async{
-    await fetchData(useCase: () => getAllProductsUsecase(), emit: emit );
+    await fetchPaginData<ProductEntity>(useCase: () => getAllProductsUsecase(page: 1, limit: 10),
+    emit: emit,
+    page: 1,
+    previosItems: [] );
 
   }
 

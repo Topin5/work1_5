@@ -28,13 +28,18 @@ class AuthBloc  extends BaseBloc<AuthEvent, AuthEntity>{
       LoginEvent event,
       Emitter<BaseState<AuthEntity>> emit,
     )async{
-      await fetchData(
-      useCase:() => loginUsecase(
-          username: event.username,
-          password: event.password,
-        ),
-        emit: emit,
-      );
+      emit(LoadingState<AuthEntity>());
+      final result = await loginUsecase(
+        username: event.username,
+        password: event.password);
+        await result.fold(
+          (failure) { emit(ErrorState<AuthEntity>(failure.message));
+        },
+        (user) async{
+          await secureStorage.saveToken(user.token);
+       emit(AuthLoaded(user));
+        }        
+        );
     }
 
     Future<void> _onLogout(

@@ -16,12 +16,14 @@ class AuthRemoteDatasourseIml implements AuthRemoteDatasourse{
     required String username, 
     required String password})async {
       final response = await dio.post(
-        'auth/login',
+        '/auth/login',
         data: {
           'username': username,
           'password': password
         }
      );
+     print(username);
+     print(password);
      return AuthModel.fromJson(response.data); 
   }
 

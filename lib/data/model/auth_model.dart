@@ -4,7 +4,7 @@ class AuthModel extends AuthEntity{
   AuthModel({
     required super.token
   });
-  factory AuthModel.fromJson(Map<String, dynamic> jason){
-    return AuthModel(token: jason['token']);
+  factory AuthModel.fromJson(Map<String, dynamic> json){
+    return AuthModel(token: json['accessToken']);
   }
 }

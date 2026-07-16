@@ -15,7 +15,7 @@ class ProductModel extends ProductEntity {
       id: json['id'] as int , 
       category: json['category'], 
       desc: json['description'], 
-      image: json['image'] ?? "", 
+      image: json['thumbnail'] ?? "" , 
       price: (json['price'] as num).toDouble(), 
       title: json['title']
       );

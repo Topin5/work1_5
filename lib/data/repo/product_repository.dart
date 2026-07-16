@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:lesson1_5/core/failure.dart';
 import 'package:lesson1_5/data/datasource/product_remote_datasource.dart';
+import 'package:lesson1_5/domain/entity/pagin_result.dart';
 import 'package:lesson1_5/domain/entity/product_entity.dart';
 import 'package:lesson1_5/domain/repo/product_repo.dart';
 
@@ -12,14 +13,24 @@ class ProductRepositoryImpl implements ProductRepo {
   ProductRepositoryImpl(this.remoteDatasource);
 
   @override
-  Future<Either<Failure, List<ProductEntity>>> getAllProducts()async {
+  Future<Either<Failure, PaginResult<ProductEntity>>> getAllProducts({
+    required int page,
+    int limit =10
+  })async {
     try{
-      final products = await remoteDatasource.getAllProducts();
-      return Right(products);
+      final response = await remoteDatasource.getAllProducts(
+        page: page,
+        limit: limit
+      );
+      final skip = (page - 1)* limit;
+      return Right(PaginResult(
+        items: response.products,
+        currentPage: page, 
+        hasnextPage: skip + response.products.length < response.total));
     }on DioException catch (e){
       return Left(ServerFailure (e.message ?? 'Ошибка сервера'));
-    }catch(e){
-      return Left(NetWorkFailure ('нет соединение'));
+    } catch(e){
+      return Left(NetWorkFailure (e.toString()));
     }
   }
   

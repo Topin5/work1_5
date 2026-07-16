@@ -12,9 +12,14 @@ class AppRouter{
   initialLocation: login,
   redirect: (context, state) async{
     final isLoggedIn = await sl<SecureStorage>().isLoggedIn;
-    if(isLoggedIn) return home;
+    final isLoginPage = state.matchedLocation == login;
+    if(!isLoggedIn && !isLoginPage){
+    return login;
+    }
+    if(isLoggedIn && isLoginPage){
+      return home;
+    }
     return null;
-  
   },
   routes: [
     GoRoute(path: login,
